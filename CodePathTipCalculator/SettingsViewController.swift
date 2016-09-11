@@ -13,6 +13,7 @@ class SettingsViewController: UIViewController {
     @IBOutlet weak var cancelSettingsView: UIBarButtonItem!
     @IBOutlet weak var defaultTipPercentage: UITextField!
     let defaultTipCacheKey = "defaultTipPercentage"
+    let defaults = NSUserDefaults.standardUserDefaults()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,10 +31,9 @@ class SettingsViewController: UIViewController {
     }
     
     @IBAction func refreshUserDefaults(sender: AnyObject) {
-        let defaults = NSUserDefaults.standardUserDefaults()
         let tipPercentage = Int(defaultTipPercentage.text!) ?? 0
-        defaults.setInteger(tipPercentage, forKey: defaultTipCacheKey)
-        defaults.synchronize()
+        self.defaults.setInteger(tipPercentage, forKey: defaultTipCacheKey)
+        self.defaults.synchronize()
     }
 
     @IBAction func dismissView(sender: AnyObject) {

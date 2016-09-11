@@ -37,7 +37,7 @@
 /* Begin PBXFileReference section */
 		AEFB83001D83CDD500A9DB33 /* CodePathTipCalculator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CodePathTipCalculator.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AEFB83031D83CDD500A9DB33 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		AEFB83051D83CDD500A9DB33 /* TipViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TipViewController.swift; sourceTree = "<group>"; };
+		AEFB83051D83CDD500A9DB33 /* TipViewController.swift */ = {isa = PBXFileReference; indentWidth = 3; lastKnownFileType = sourcecode.swift; path = TipViewController.swift; sourceTree = "<group>"; };
 		AEFB83081D83CDD500A9DB33 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		AEFB830A1D83CDD500A9DB33 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AEFB830D1D83CDD500A9DB33 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -486,6 +486,7 @@
 				AEFB832A1D83CDD600A9DB33 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		AEFB832B1D83CDD600A9DB33 /* Build configuration list for PBXNativeTarget "CodePathTipCalculatorTests" */ = {
 			isa = XCConfigurationList;
@@ -494,6 +495,7 @@
 				AEFB832D1D83CDD600A9DB33 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		AEFB832E1D83CDD600A9DB33 /* Build configuration list for PBXNativeTarget "CodePathTipCalculatorUITests" */ = {
 			isa = XCConfigurationList;
@@ -502,6 +504,7 @@
 				AEFB83301D83CDD600A9DB33 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

@@ -31,7 +31,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                                 <connections>
-                                    <action selector="calculateTip:" destination="BYZ-38-t0r" eventType="editingChanged" id="sFm-zm-TwZ"/>
+                                    <action selector="subtotalChanged:" destination="BYZ-38-t0r" eventType="editingChanged" id="o4G-pm-BOu"/>
                                 </connections>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tax" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="5z2-xF-GGn">
