@@ -24,18 +24,18 @@ class ViewController: UIViewController {
    
    var defaultTipValue = 0.0;
    let tipPercentages = [0.15, 0.18, 0.2]
-   let subtotalDurationInSeconds = 10.0 * 60
+   let subtotalDurationInSeconds = 60.0 * 10 // 10 minutes
    
    override func viewDidLoad() {
       super.viewDidLoad()
-      self.defaults.removeObjectForKey(self.backgroundIDCacheKey)
+      defaults.removeObjectForKey(backgroundIDCacheKey)
       // Do any additional setup after loading the view, typically from a nib.
    }
    
    override func viewWillAppear(animated: Bool) {
       super.viewWillAppear(animated)
-      self.defaultTipValue = 0.01 * self.defaults.doubleForKey(defaultTipCacheKey)
-      self.subtotalTextField.becomeFirstResponder()
+      defaultTipValue = 0.01 * defaults.doubleForKey(defaultTipCacheKey)
+      subtotalTextField.becomeFirstResponder()
       populateBillSubtotal()
       populateKittenImageView()
    }
@@ -57,21 +57,32 @@ class ViewController: UIViewController {
    }
    
    /**
-    Updates the tip and total amounts either using the selected segment index 
-    or default tip value
+    Triggered by changing the subtotal field
     
     @param sender: AnyObject.
     
     @return Nil.
     */
    @IBAction func subtotalChanged(sender: AnyObject) {
+      calculateTipTotal()
+      updateCacheWithNewSubtotal()
+   }
+   
+   /**
+    Updates the tip and total amounts either using the selected segment index
+    or default tip value
+    
+    @param Nil.
+    
+    @return Nil.
+    */
+   func calculateTipTotal() {
       let subtotal = Double(subtotalTextField.text!) ?? 0
       let selectedPercentage = (tipControl.selectedSegmentIndex == -1) ?
-         self.defaultTipValue : self.tipPercentages[tipControl.selectedSegmentIndex]
+         defaultTipValue : tipPercentages[tipControl.selectedSegmentIndex]
       let tip = subtotal * selectedPercentage
       tipLabel.text = String(formatWithLocale(tip))
       totalLabel.text = String(formatWithLocale(tip + subtotal))
-      updateCacheWithNewSubtotal()
    }
    
    /**
@@ -82,9 +93,9 @@ class ViewController: UIViewController {
     @return Nil.
     */
    func updateCacheWithNewSubtotal() {
-      self.defaults.setObject(NSDate() , forKey: self.subtotalTimestampCacheKey)
-      self.defaults.setObject(subtotalTextField.text! , forKey: self.subtotalCacheKey)
-      self.defaults.synchronize()
+      defaults.setObject(NSDate() , forKey: subtotalTimestampCacheKey)
+      defaults.setObject(subtotalTextField.text! , forKey: subtotalCacheKey)
+      defaults.synchronize()
    }
    
    /**
@@ -96,10 +107,14 @@ class ViewController: UIViewController {
     @return Nil.
     */
    func populateBillSubtotal() {
-      if let subtotalLastChanged = self.defaults.objectForKey(self.subtotalTimestampCacheKey)
-         where self.isWithinTimeLimit(subtotalLastChanged as! NSDate) {
-         subtotalTextField.text = self.defaults.stringForKey(self.subtotalCacheKey)
-         self.subtotalChanged(self)
+      if let subtotalLastChanged = defaults.objectForKey(subtotalTimestampCacheKey)
+         where isWithinTimeLimit(subtotalLastChanged as! NSDate) {
+         subtotalTextField.text = defaults.stringForKey(subtotalCacheKey)
+         calculateTipTotal()
+      } else {
+         subtotalTextField.text = ""
+         tipLabel.text = ""
+         totalLabel.text = ""
       }
    }
    
@@ -112,7 +127,7 @@ class ViewController: UIViewController {
     */
    func isWithinTimeLimit(lastChangedTimestamp: NSDate) -> Bool {
       let currentDateTimeAsInterval = NSDate().timeIntervalSinceReferenceDate
-      return (currentDateTimeAsInterval - lastChangedTimestamp.timeIntervalSinceReferenceDate < self.subtotalDurationInSeconds)
+      return (currentDateTimeAsInterval - lastChangedTimestamp.timeIntervalSinceReferenceDate < subtotalDurationInSeconds)
    }
    
    /**
@@ -125,17 +140,17 @@ class ViewController: UIViewController {
    func populateKittenImageView() {
       let kittenImageFileName = getKittenImageFileName()
       if (kittenImageFileName != "") {
-         UIGraphicsBeginImageContext(self.kittenImageView.frame.size)
-         UIImage(named: kittenImageFileName)?.drawInRect(self.kittenImageView.bounds)
+         UIGraphicsBeginImageContext(kittenImageView.frame.size)
+         UIImage(named: kittenImageFileName)?.drawInRect(kittenImageView.bounds)
          let image: UIImage = UIGraphicsGetImageFromCurrentImageContext()
          UIGraphicsEndImageContext()
          
-         self.kittenImageView.alpha = 0
+         kittenImageView.alpha = 0
          UIView.animateWithDuration(1, animations: {
             self.kittenImageView.alpha = 0.4
          })
          
-         self.kittenImageView.backgroundColor = UIColor(patternImage: image)
+         kittenImageView.backgroundColor = UIColor(patternImage: image)
       }
    }
    
@@ -147,7 +162,7 @@ class ViewController: UIViewController {
     @return a String of the image filename.
     */
    func getKittenImageFileName() -> String {
-      let backgroundImageValue = self.defaults.integerForKey(self.backgroundIDCacheKey) ?? 0
+      let backgroundImageValue = defaults.integerForKey(backgroundIDCacheKey) ?? 0
       if (backgroundImageValue == 0) {
          return ""
       } else {

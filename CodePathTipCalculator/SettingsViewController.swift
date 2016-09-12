@@ -23,9 +23,9 @@ class SettingsViewController: UIViewController {
         super.viewDidLoad()
 
         // checks for default tip vale
-        if let defaultTipValue = self.defaults.objectForKey(defaultTipCacheKey)?.integerValue {
-            self.tipAmountSlider.value = Float(defaultTipValue)
-            self.tipAmountField.text = String(defaultTipValue) + "%"
+        if let defaultTipValue = defaults.objectForKey(defaultTipCacheKey)?.integerValue {
+            tipAmountSlider.value = Float(defaultTipValue)
+            tipAmountField.text = String(defaultTipValue) + "%"
         }
     }
 
@@ -43,8 +43,8 @@ class SettingsViewController: UIViewController {
      */
     @IBAction func onSurpriseButtonClick(sender: AnyObject) {
         let backgroundNumber = Int(arc4random_uniform(3) + 1)
-        self.defaults.setInteger(backgroundNumber, forKey: self.backgroundIDCacheKey)
-        self.defaults.synchronize()
+        defaults.setInteger(backgroundNumber, forKey: backgroundIDCacheKey)
+        defaults.synchronize()
     }
 
     /**
@@ -55,7 +55,7 @@ class SettingsViewController: UIViewController {
      @return Nil.
      */
     @IBAction func dismissView(sender: AnyObject) {
-        self.navigationController?.popViewControllerAnimated(true)
+        navigationController?.popViewControllerAnimated(true)
     }
     
     /**
@@ -67,9 +67,9 @@ class SettingsViewController: UIViewController {
      */
     @IBAction func tipAmountChanged(sender: AnyObject) {
         let tipPercentage = Int(tipAmountSlider.value) ?? 0
-        self.defaults.setInteger(tipPercentage, forKey: self.defaultTipCacheKey)
-        self.defaults.synchronize()
-        self.tipAmountField.text = String(tipPercentage) + "%"
+        defaults.setInteger(tipPercentage, forKey: defaultTipCacheKey)
+        defaults.synchronize()
+        tipAmountField.text = String(tipPercentage) + "%"
     }
 
 }

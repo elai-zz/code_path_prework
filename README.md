@@ -23,6 +23,7 @@ The following **additional** features are implemented:
 
 * [x] Allowing the user to go back to the main app from Settings screen
 * [x] Background images
+* [x] App icons
 
 ## Video Walkthrough 
 
