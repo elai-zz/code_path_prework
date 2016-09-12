@@ -4,7 +4,7 @@
 
 Submitted by: **Minnie Lai**
 
-Time spent: **2** hours spent in total
+Time spent: **5** hours spent in total
 
 ## User Stories
 
@@ -14,15 +14,15 @@ The following **required** functionality is complete:
 * [x] Settings page to change the default tip percentage.
 
 The following **optional** features are implemented:
-* [ ] UI animations
+* [x] UI animations
 * [x] Remembering the bill amount across app restarts (if <10mins)
-* [ ] Using locale-specific currency and currency thousands separators.
+* [x] Using locale-specific currency and currency thousands separators.
 * [x] Making sure the keyboard is always visible and the bill amount is always the first responder. This way the user doesn't have to tap anywhere to use this app. Just launch the app and start typing.
 
 The following **additional** features are implemented:
 
-- [ ] List anything else that you can get done to improve the app functionality!
 * [x] Allowing the user to go back to the main app from Settings screen
+* [x] Background images
 
 ## Video Walkthrough 
 
@@ -34,7 +34,9 @@ GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
 ## Notes
 
-Describe any challenges encountered while building the app.
+I found that putting all of the states in the `NSUserDefaults` was tedious and somewhat of an anti-pattern. I know that the delegate pattern is often used in iOS development, but unfortunately I am not familiar withit and thus depended on `NSUserDefaults` to keep track of the background image selection and default tip.
+
+I would have liked to put the locale selection directly in the settings page and come up with a better UI for the choices. 
 
 ## License
 

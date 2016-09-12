@@ -10,18 +10,22 @@ import UIKit
 
 class SettingsViewController: UIViewController {
 
+    @IBOutlet weak var tipAmountSlider: UISlider!
     @IBOutlet weak var cancelSettingsView: UIBarButtonItem!
-    @IBOutlet weak var defaultTipPercentage: UITextField!
+    @IBOutlet weak var tipAmountField: UILabel!
+    @IBOutlet weak var surpriseButton: UIButton!
+    
     let defaultTipCacheKey = "defaultTipPercentage"
+    let backgroundIDCacheKey = "background"
     let defaults = NSUserDefaults.standardUserDefaults()
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let defaults = NSUserDefaults.standardUserDefaults()
-        let defaultTipValue = defaults.integerForKey(defaultTipCacheKey)
-        if (defaultTipValue != 0) {
-            defaultTipPercentage.text = String(defaultTipValue)
+        // checks for default tip vale
+        if let defaultTipValue = self.defaults.objectForKey(defaultTipCacheKey)?.integerValue {
+            self.tipAmountSlider.value = Float(defaultTipValue)
+            self.tipAmountField.text = String(defaultTipValue) + "%"
         }
     }
 
@@ -30,24 +34,42 @@ class SettingsViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func refreshUserDefaults(sender: AnyObject) {
-        let tipPercentage = Int(defaultTipPercentage.text!) ?? 0
-        self.defaults.setInteger(tipPercentage, forKey: defaultTipCacheKey)
+    /**
+     Randomly selects an integer between 1-3 as the background image ID.
+     
+     @param sender:AnyObject.
+     
+     @return Nil.
+     */
+    @IBAction func onSurpriseButtonClick(sender: AnyObject) {
+        let backgroundNumber = Int(arc4random_uniform(3) + 1)
+        self.defaults.setInteger(backgroundNumber, forKey: self.backgroundIDCacheKey)
         self.defaults.synchronize()
     }
 
+    /**
+     Returns to previous view.
+     
+     @param sender:AnyObject.
+     
+     @return Nil.
+     */
     @IBAction func dismissView(sender: AnyObject) {
         self.navigationController?.popViewControllerAnimated(true)
     }
     
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    /**
+     Updates default tip amount value and UI field displaying tip amount
+     
+     @param sender:AnyObject.
+     
+     @return Nil.
+     */
+    @IBAction func tipAmountChanged(sender: AnyObject) {
+        let tipPercentage = Int(tipAmountSlider.value) ?? 0
+        self.defaults.setInteger(tipPercentage, forKey: self.defaultTipCacheKey)
+        self.defaults.synchronize()
+        self.tipAmountField.text = String(tipPercentage) + "%"
     }
-    */
 
 }
